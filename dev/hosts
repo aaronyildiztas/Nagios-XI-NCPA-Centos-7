@@ -1,0 +1,2 @@
+[nagios]
+Nagios_XI ansible_host=104.236.21.192
