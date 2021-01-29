@@ -4,15 +4,17 @@
     import_role:
       name: nagios-prerequisites
 
-  - name:  Install SNMP packages
-    import_role:
-      name: nagios-snpm
-
-  - name:  Install Nagios Packages
+- hosts: nagios
+  tasks:
+  - name: Install Nagios XI
     import_role:
       name: nagios-installation
 
+- hosts: ncpa-agent
+  tasks:
+  - name:  Install NCPA for Nagios
+    import_role:
+      name: nagios-ncpa
 
-   
 
 

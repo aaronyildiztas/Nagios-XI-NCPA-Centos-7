@@ -1,18 +1,19 @@
+  - name: Create NCPA Repo
+    shell: "rpm -Uvh https://assets.nagios.com/downloads/ncpa/ncpa-latest.el7.x86_64.rpm"
+    ignore_errors: true
+    
+  - name: Install Prerequisites
+    yum:
+      name: ncpa
+      state: latest
 
-- hosts: snmp-agent
-  tasks:
-  - name: Install SNMP Packages
-      package:
-        name:
-          - net-snmp
-          - net-snmp-utils
-        state: present
-        lock_timeout: 180
-      become: true
-  - name: Configure SNMP v2c Community
+  - name: Configuring NCPA
     lineinfile:
-      path: /etc/snmp/snmpd.conf
-      regexp: 'com2sec notConfigUser  default       public'
-      line: 'com2sec notConfigUser  default       <COMMUNITY>'
-      backrefs: true
-    become: true
+      path: /usr/local/ncpa/etc/ncpa.cfg
+      regexp: '^community_string'
+      line: 'community_string = ncpa2525'
+    
+  - name: Restart NCPA
+    systemd:
+      name: ncpa_listener
+      state: restarted
