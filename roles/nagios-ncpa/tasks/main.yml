@@ -1,0 +1,18 @@
+
+- hosts: snmp-agent
+  tasks:
+  - name: Install SNMP Packages
+      package:
+        name:
+          - net-snmp
+          - net-snmp-utils
+        state: present
+        lock_timeout: 180
+      become: true
+  - name: Configure SNMP v2c Community
+    lineinfile:
+      path: /etc/snmp/snmpd.conf
+      regexp: 'com2sec notConfigUser  default       public'
+      line: 'com2sec notConfigUser  default       <COMMUNITY>'
+      backrefs: true
+    become: true

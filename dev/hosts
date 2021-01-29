@@ -1,2 +1,7 @@
 [nagios]
-Nagios_XI ansible_host=104.236.21.192
+Nagios_XI ansible_host=104.236.31.245
+
+[ncpa-agent]
+ncpa_agent1 ansible_host=159.89.233.241
+ncpa_agent2 ansible_host=104.248.116.22
+ncpa_agent3 ansible_host=104.248.116.56

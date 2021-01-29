@@ -1,0 +1,30 @@
+- hosts: ncpa-agent
+  tasks:
+  - name: Install Prerequisites
+    yum:
+      name:
+      - epel-release
+      - vim
+      - wget
+      - git
+  - name: Create NCPA Repo
+    shell: "rpm -Uvh https://assets.nagios.com/downloads/ncpa/ncpa-latest.el7.x86_64.rpm"
+    ignore_errors: true
+    
+  - name: Install Prerequisites
+    yum:
+      name: ncpa
+      state: latest
+
+  - name: Configuring NCPA
+    lineinfile:
+      path: /usr/local/ncpa/etc/ncpa.cfg
+      regexp: '^community_string'
+      line: 'community_string = ncpa2525'
+    notify: restart_ncpa
+
+  handlers:
+    - name: restart_ncpa
+      systemd:
+        name: ncpa_listener
+        state: restarted

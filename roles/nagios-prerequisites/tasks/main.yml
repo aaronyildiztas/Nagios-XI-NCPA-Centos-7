@@ -1,2 +1,18 @@
----
-# tasks file for nagios-prerequisites
+- name: Check Operating System
+  fail:
+    msg="You're not running a supported operating system (CentOS or RHEL 7+)"
+  when: ((ansible_os_family != "RedHat") or (ansible_distribution_major_version|int < 7))
+
+- name: Nagios Repository
+  yum: name=http://repo.nagios.com/nagios/7/nagios-repo-7-4.el7.noarch.rpm
+    state=present
+  become: true
+
+- name: Install Packages
+  yum:
+    name:
+    - epel-release
+    - vim
+    - wget
+    - git
+    - unzip

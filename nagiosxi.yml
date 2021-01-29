@@ -1,0 +1,13 @@
+- hosts: nagios
+  tasks:
+  - name: Install Prerequisites
+    yum:
+      name:
+      - epel-release
+      - vim
+      - wget
+      - git
+      - unzip
+  - name: Install Nagios XI
+    shell: "curl https://assets.nagios.com/downloads/nagiosxi/install.sh | sh"
+    ignore_errors: true

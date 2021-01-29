@@ -1,0 +1,18 @@
+- hosts: all
+  tasks:
+  - name: install Prerequisites
+    import_role:
+      name: nagios-prerequisites
+
+  - name:  Install SNMP packages
+    import_role:
+      name: nagios-snpm
+
+  - name:  Install Nagios Packages
+    import_role:
+      name: nagios-installation
+
+
+   
+
+
